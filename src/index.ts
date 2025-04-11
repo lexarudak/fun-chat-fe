@@ -1,1 +1,4 @@
-console.log('Hello, Fun Chat!');
+import { App } from './app';
+
+const app = new App();
+app.init();
