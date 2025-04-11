@@ -13,13 +13,16 @@ export class InputComponent {
   errorContainer: HTMLParagraphElement;
   validator: Validator;
   isValid = false;
+  onInput: (e: Event) => void;
 
   constructor(
     defaultValue: string,
     title: string,
     placeholder: string,
     validator: Validator,
+    onInput: (e: Event) => void,
   ) {
+    this.onInput = onInput;
     this.value = defaultValue;
     this.title = title;
     this.placeholder = placeholder;
@@ -43,7 +46,9 @@ export class InputComponent {
     }
     this.value = e.target.value;
     const validationResult = this.validator(this.value);
+
     this.handleError(validationResult);
+    this.onInput(e);
   };
 
   handleError = ({ errorMessage, isValid }: ValidationResult) => {

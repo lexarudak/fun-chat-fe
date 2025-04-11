@@ -3,9 +3,9 @@ import { Router } from '../../router/router';
 import { HTMLBuilder } from '../../utils/html-builder';
 import { messages } from './messages';
 
-export class NotFoundPage {
+export class AboutPage {
   router;
-  pathname = PagePath.NotFound;
+  pathname = PagePath.About;
   builder: HTMLBuilder;
 
   constructor(router: Router) {
@@ -13,14 +13,14 @@ export class NotFoundPage {
     this.builder = new HTMLBuilder();
   }
 
-  navigateToHome = () => this.router.goTo(PagePath.Home);
+  navigateBack = () => window.history.back();
 
   render() {
     const page = this.builder.getDiv('small-page');
     const title = this.builder.getTitle(messages.title);
     const message = this.builder.getP(messages.text);
 
-    const button = this.builder.getBtn(messages.button, this.navigateToHome, {
+    const button = this.builder.getBtn(messages.button, this.navigateBack, {
       classname: 'back-btn',
     });
 

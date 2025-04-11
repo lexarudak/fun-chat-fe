@@ -10,6 +10,12 @@ export class HTMLBuilder {
     return div;
   };
 
+  getForm = (classname: string) => {
+    const form = document.createElement('form');
+    form.classList.add(classname);
+    return form;
+  };
+
   getTitle = (text: string, classname?: string) => {
     const title = document.createElement('h1');
     title.classList.add('title');

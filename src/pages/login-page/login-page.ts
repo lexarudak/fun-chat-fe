@@ -1,5 +1,4 @@
 import { InputComponent } from '../../components/input/input';
-import { Modal } from '../../components/modal/modal';
 import { PagePath } from '../../router/constants';
 import { Router } from '../../router/router';
 import { HTMLBuilder } from '../../utils/html-builder';
@@ -13,7 +12,6 @@ export class LoginPage {
   router;
   builder;
   submitButton;
-  modal;
   nameInput;
   passInput;
 
@@ -22,20 +20,21 @@ export class LoginPage {
   constructor(router: Router) {
     this.router = router;
     this.builder = new HTMLBuilder();
-    this.modal = new Modal();
 
     this.nameInput = new InputComponent(
       DEFAULT_IMPORT_VALUE,
       messages.name,
       messages.namePlaceholder,
-      this.nameValidator,
+      nameValidator,
+      this.checkValidation,
     );
 
     this.passInput = new InputComponent(
       DEFAULT_IMPORT_VALUE,
       messages.password,
       messages.passwordPlaceholder,
-      this.passValidator,
+      passValidator,
+      this.checkValidation,
     );
 
     this.submitButton = this.builder.getBtn(messages.submit, this.submit, {
@@ -44,33 +43,21 @@ export class LoginPage {
     });
   }
 
-  nameValidator = (value: string) => {
-    const validateResult = nameValidator(value);
-
+  checkValidation = () => {
     this.submitButton.disabled = !(
-      validateResult.isValid && this.passInput.isValid
+      this.passInput.isValid && this.nameInput.isValid
     );
-    return validateResult;
   };
 
-  passValidator = (value: string) => {
-    const validateResult = passValidator(value);
+  submit = () => this.router.goTo(PagePath.Home);
 
-    this.submitButton.disabled = !(
-      validateResult.isValid && this.nameInput.isValid
-    );
-    return validateResult;
-  };
-
-  submit = () => {
-    this.router.goTo(PagePath.Home);
-  };
+  navigateToAbout = () => this.router.goTo(PagePath.About);
 
   render() {
-    const page = this.builder.getDiv('login-page');
+    const page = this.builder.getForm('small-page');
 
     const title = this.builder.getTitle(messages.title);
-    const modalBtn = this.builder.getBtn(messages.info, this.modal.openModal);
+    const modalBtn = this.builder.getBtn(messages.info, this.navigateToAbout);
     const nameInput = this.nameInput.render();
     const passInput = this.passInput.render();
 

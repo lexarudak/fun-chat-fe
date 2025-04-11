@@ -55,3 +55,19 @@ body {
   text-align: inherit;
   flex-grow: 1;
 }
+
+.small-page {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  min-height: 500px;
+  box-shadow: var(--shadow);
+
+  .back-btn {
+    margin: auto 0 0;
+  }
+
+}
