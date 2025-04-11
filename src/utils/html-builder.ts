@@ -4,6 +4,12 @@ type ButtonOptions = {
 };
 
 export class HTMLBuilder {
+  getHeader = (classname: string) => {
+    const header = document.createElement('header');
+    header.classList.add(classname);
+    return header;
+  };
+
   getDiv = (classname: string) => {
     const div = document.createElement('div');
     div.classList.add(classname);

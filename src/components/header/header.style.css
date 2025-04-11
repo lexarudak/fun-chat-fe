@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  gap: 20px;
+  flex-grow: 1;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+
+  .about-btn {
+    margin-left: auto;
+  }
+
+}
