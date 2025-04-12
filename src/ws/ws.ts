@@ -1,5 +1,5 @@
 import { WebSocketTypes } from './constants';
-import { WsListener, WsResponse } from './types';
+import { UserData, WsListener, WsResponse } from './types';
 
 const ORIGIN = 'http://127.0.0.1:4000';
 
@@ -15,13 +15,9 @@ class WebSocketService {
   }
 
   init = () => {
-    if (this.socket.readyState === WebSocket.CLOSED) {
-      this.socket = new WebSocket(this.url);
-    }
-
     this.socket.addEventListener('message', (event) => {
       const data: WsResponse = JSON.parse(event.data);
-      console.log('AAA§', data.type);
+      console.log('Type: ', data.type);
       const selectedListeners = this.listeners.get(data.type);
       if (selectedListeners) {
         selectedListeners.forEach((callback) => {
@@ -44,7 +40,7 @@ class WebSocketService {
     listeners.add(callback);
   };
 
-  login = (user: { login: string; password: string }) => {
+  login = (user: UserData) => {
     this.socket.send(
       JSON.stringify({
         id: null,
@@ -56,15 +52,26 @@ class WebSocketService {
     );
   };
 
+  logout = (user: UserData) => {
+    this.socket.send(
+      JSON.stringify({
+        id: null,
+        type: WebSocketTypes.USER_LOGOUT,
+        payload: {
+          user,
+        },
+      }),
+    );
+  };
+
   gettingAllAuthenticatedUsers = () => {
-    const a = this.socket.send(
+    this.socket.send(
       JSON.stringify({
         id: null,
         type: WebSocketTypes.USER_ACTIVE,
         payload: null,
       }),
     );
-    console.log({ a });
   };
 }
 

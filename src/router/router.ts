@@ -1,21 +1,21 @@
-import { SS_KEY } from '../constants';
 import { AboutPage } from '../pages/about-page/about-page';
 import { HomePage } from '../pages/home-page/home-page';
 import { LoginPage } from '../pages/login-page/login-page';
 import { NotFoundPage } from '../pages/not-found-page/not-found-page';
+import { SSController } from '../utils/ss-controller';
 import { WebSocketTypes } from '../ws/constants';
 import { Payload } from '../ws/payloads';
-import { User } from '../ws/types';
+import { User, UserData } from '../ws/types';
 import { ws } from '../ws/ws';
 import { PagePath } from './constants';
 
 export class Router {
   pages;
-  user;
+  ssController;
+  isLogined = false;
 
   constructor() {
-    const savedUser = sessionStorage.getItem(SS_KEY.user);
-    this.user = savedUser ? JSON.parse(savedUser) : null;
+    this.ssController = new SSController();
 
     this.pages = [
       new HomePage(this),
@@ -25,19 +25,32 @@ export class Router {
     ];
 
     ws.addListener(WebSocketTypes.USER_LOGIN, this.handleLogin);
+    ws.addListener(WebSocketTypes.USER_LOGOUT, this.handleLogout);
   }
 
   handleLogin = (data: Payload.SuccessLogin) => {
-    this.user = data.user;
+    if (data.user?.isLogined) {
+      this.isLogined = true;
 
-    if (this.user?.isLogined && window.location.pathname === PagePath.Login) {
-      this.goTo(PagePath.Home);
+      if (window.location.pathname === PagePath.Login) {
+        this.goTo(PagePath.Home);
+      }
+    }
+  };
+
+  handleLogout = (data: Payload.SuccessLogin) => {
+    if (!data.user?.isLogined) {
+      this.ssController.removerUser();
+      this.isLogined = false;
+      this.goTo(PagePath.Login);
     }
   };
 
   init = () => {
-    if (this.user) {
-      ws.login(this.user);
+    const savedUser = this.ssController.getUser();
+
+    if (savedUser) {
+      ws.login(savedUser);
     }
 
     const { pathname } = window.location;
@@ -50,7 +63,7 @@ export class Router {
   };
 
   handleRedirects = (path: PagePath | string) => {
-    if (path === PagePath.Login && this.user?.isLogined) {
+    if (path === PagePath.Login && this.isLogined) {
       this.goTo(PagePath.Home);
     }
   };

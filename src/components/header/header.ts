@@ -3,6 +3,8 @@ import { HTMLBuilder } from '../../utils/html-builder';
 import { Router } from '../../router/router';
 import { PagePath } from '../../router/constants';
 import './header.style.css';
+import { ws } from '../../ws/ws';
+import { SS_KEY } from '../../constants';
 
 const DEFAULT_USERNAME = 'User';
 
@@ -19,7 +21,14 @@ export class Header {
 
   navigateToAbout = () => this.router.goTo(PagePath.About);
 
-  logout = () => {};
+  logout = () => {
+    const user = sessionStorage.getItem(SS_KEY.user);
+
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      ws.logout(parsedUser);
+    }
+  };
 
   render() {
     const header = this.builder.getHeader('header');

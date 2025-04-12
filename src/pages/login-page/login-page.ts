@@ -3,10 +3,12 @@ import { SS_KEY } from '../../constants';
 import { PagePath } from '../../router/constants';
 import { Router } from '../../router/router';
 import { HTMLBuilder } from '../../utils/html-builder';
+import { SSController } from '../../utils/ss-controller';
 import { nameValidator } from '../../validators/name-validator/name-validator';
 import { passValidator } from '../../validators/pass-validator/pass-validator';
 import { WebSocketTypes } from '../../ws/constants';
 import { Payload } from '../../ws/payloads';
+import { UserData } from '../../ws/types';
 import { ws } from '../../ws/ws';
 
 import './login-page.styles.css';
@@ -21,10 +23,12 @@ export class LoginPage {
   nameInput;
   passInput;
   errorContainer;
+  ssController;
 
   pathname = PagePath.Login;
 
   constructor(router: Router) {
+    this.ssController = new SSController();
     this.router = router;
     this.builder = new HTMLBuilder();
 
@@ -69,13 +73,11 @@ export class LoginPage {
     );
   };
 
-  saveUser =
-    (user: { login: string; password: string }) =>
-    (data: Payload.SuccessLogin) => {
-      if (data.user.isLogined) {
-        sessionStorage.setItem(SS_KEY.user, JSON.stringify(user));
-      }
-    };
+  saveUser = (userData: UserData) => (data: Payload.SuccessLogin) => {
+    if (data.user.isLogined) {
+      this.ssController.setUser(userData);
+    }
+  };
 
   submit = () => {
     const user = {

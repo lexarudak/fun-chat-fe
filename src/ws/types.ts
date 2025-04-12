@@ -14,4 +14,9 @@ export type User = {
   login: string;
 };
 
+export type UserData = {
+  login: string;
+  password: string;
+};
+
 export type WsListener = (payload: WsPayloads) => void;
