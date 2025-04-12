@@ -1,0 +1,6 @@
+export enum WebSocketTypes {
+  USER_LOGIN = 'USER_LOGIN',
+  ERROR = 'ERROR',
+  USER_ACTIVE = 'USER_ACTIVE',
+  USER_EXTERNAL_LOGIN = 'USER_EXTERNAL_LOGIN',
+}

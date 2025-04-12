@@ -3,6 +3,7 @@ html {
   min-height: 100%;
   display: flex;
   font-family: 'Roboto', sans-serif;
+  background-color: var(--html-background);
 }
 
 body {
@@ -13,9 +14,11 @@ body {
 }
 
 :root {
+  --html-background: #09252e;
   --color-background: #94c0c2;
   --btn-color: #e2edc6;
   --btn-color-hover: #f9ffea;
+  --font-active: #4a4a4a;
   --shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
@@ -70,4 +73,26 @@ body {
     margin: auto 0 0;
   }
 
+}
+
+a {
+  color: inherit;
+  transition: .2s;
+
+  &:hover {
+    color: var(--font-active);
+  }
+
+}
+
+.error-message {
+  color: red;
+  min-height: 20px;
+  margin: 10px 0 0;
+}
+
+.loader {
+  color: var(--btn-color);
+  font-size: 20px;
+  font-weight: 600;
 }

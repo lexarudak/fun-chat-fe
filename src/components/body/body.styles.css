@@ -1,0 +1,7 @@
+.chat-body {
+  display: flex;
+  gap: 20px;
+  background-color: var(--color-background);
+  border-radius: 10px;
+  flex-grow: 1;
+}

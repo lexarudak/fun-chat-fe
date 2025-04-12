@@ -1,4 +1,4 @@
-.header {
+.footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,9 +7,4 @@
   gap: 20px;
   border-radius: 5px;
   box-shadow: var(--shadow);
-
-  .about-btn {
-    margin-left: auto;
-  }
-
 }

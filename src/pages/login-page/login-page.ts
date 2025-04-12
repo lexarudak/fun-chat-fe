@@ -1,19 +1,26 @@
 import { InputComponent } from '../../components/input/input';
+import { SS_KEY } from '../../constants';
 import { PagePath } from '../../router/constants';
 import { Router } from '../../router/router';
 import { HTMLBuilder } from '../../utils/html-builder';
 import { nameValidator } from '../../validators/name-validator/name-validator';
 import { passValidator } from '../../validators/pass-validator/pass-validator';
+import { WebSocketTypes } from '../../ws/constants';
+import { Payload } from '../../ws/payloads';
+import { ws } from '../../ws/ws';
+
 import './login-page.styles.css';
 import { messages } from './messages';
 
 const DEFAULT_IMPORT_VALUE = '';
+const DEFAULT_ERROR_MESSAGE = '';
 export class LoginPage {
   router;
   builder;
   submitButton;
   nameInput;
   passInput;
+  errorContainer;
 
   pathname = PagePath.Login;
 
@@ -37,19 +44,48 @@ export class LoginPage {
       this.checkValidation,
     );
 
+    this.errorContainer = this.builder.getP(
+      DEFAULT_ERROR_MESSAGE,
+      'error-message',
+    );
+
     this.submitButton = this.builder.getBtn(messages.submit, this.submit, {
       isDisabled: true,
       classname: 'submit-btn',
     });
+
+    ws.addListener(WebSocketTypes.ERROR, this.handleError);
   }
 
+  handleError = (data: Payload.Error) => {
+    this.errorContainer.innerText = data.error;
+  };
+
   checkValidation = () => {
+    this.errorContainer.innerText = '';
+
     this.submitButton.disabled = !(
       this.passInput.isValid && this.nameInput.isValid
     );
   };
 
-  submit = () => this.router.goTo(PagePath.Home);
+  saveUser =
+    (user: { login: string; password: string }) =>
+    (data: Payload.SuccessLogin) => {
+      if (data.user.isLogined) {
+        sessionStorage.setItem(SS_KEY.user, JSON.stringify(user));
+      }
+    };
+
+  submit = () => {
+    const user = {
+      login: this.nameInput.value,
+      password: this.passInput.value,
+    };
+
+    ws.login(user);
+    ws.addListener(WebSocketTypes.USER_LOGIN, this.saveUser(user));
+  };
 
   navigateToAbout = () => this.router.goTo(PagePath.About);
 
@@ -61,7 +97,14 @@ export class LoginPage {
     const nameInput = this.nameInput.render();
     const passInput = this.passInput.render();
 
-    page.append(title, nameInput, passInput, this.submitButton, modalBtn);
+    page.append(
+      title,
+      nameInput,
+      passInput,
+      this.errorContainer,
+      this.submitButton,
+      modalBtn,
+    );
 
     return page;
   }

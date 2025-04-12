@@ -10,6 +10,12 @@ export class HTMLBuilder {
     return header;
   };
 
+  getFooter = (classname: string) => {
+    const footer = document.createElement('footer');
+    footer.classList.add(classname);
+    return footer;
+  };
+
   getDiv = (classname: string) => {
     const div = document.createElement('div');
     div.classList.add(classname);
@@ -65,6 +71,19 @@ export class HTMLBuilder {
 
     p.innerText = text;
     return p;
+  };
+
+  getA = (text: string, href: string, classname?: string) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = '_blank';
+
+    if (classname) {
+      a.classList.add(classname);
+    }
+
+    a.innerText = text;
+    return a;
   };
 
   getInput = (
