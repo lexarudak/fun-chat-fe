@@ -65,11 +65,21 @@ export class Router {
   handleRedirects = (path: PagePath | string) => {
     if (path === PagePath.Login && this.isLogined) {
       this.goTo(PagePath.Home);
+      return true;
+    }
+
+    if (path === PagePath.Home && !this.isLogined) {
+      this.goTo(PagePath.Login);
+      return true;
     }
   };
 
   goTo = (path: PagePath | string) => {
-    this.handleRedirects(path);
+    const isRedirect = this.handleRedirects(path);
+    if (isRedirect) {
+      return;
+    }
+
     const page =
       this.pages.find((page) => path === page.pathname) ||
       this.pages[this.pages.length - 1];

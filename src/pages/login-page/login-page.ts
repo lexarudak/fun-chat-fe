@@ -87,6 +87,15 @@ export class LoginPage {
 
     ws.login(user);
     ws.addListener(WebSocketTypes.USER_LOGIN, this.saveUser(user));
+    this.clearInputs();
+  };
+
+  clearInputs = () => {
+    this.nameInput.inputField.value = DEFAULT_IMPORT_VALUE;
+    this.passInput.inputField.value = DEFAULT_IMPORT_VALUE;
+    this.nameInput.value = DEFAULT_IMPORT_VALUE;
+    this.passInput.value = DEFAULT_IMPORT_VALUE;
+    this.errorContainer.innerText = '';
   };
 
   navigateToAbout = () => this.router.goTo(PagePath.About);

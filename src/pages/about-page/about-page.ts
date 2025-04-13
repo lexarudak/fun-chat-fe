@@ -13,7 +13,7 @@ export class AboutPage {
     this.builder = new HTMLBuilder();
   }
 
-  navigateBack = () => window.history.back();
+  navigateBack = () => this.router.goTo(PagePath.Home);
 
   render() {
     const page = this.builder.getDiv('small-page');
