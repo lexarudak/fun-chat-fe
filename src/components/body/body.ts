@@ -8,7 +8,7 @@ import { messages } from './messages';
 export class Body {
   builder;
   userList;
-  currentUser: User | null = null;
+  chat: Chat | null = null;
   chatComponent;
 
   constructor() {
@@ -18,9 +18,13 @@ export class Body {
   }
 
   setCurrentUser = (user: User) => {
-    console.log('setCurrentUser', this.currentUser);
-    this.currentUser = user;
-    const chatComponent = new Chat(this.currentUser).render();
+    if (!this.chat) {
+      this.chat = new Chat(user);
+    } else {
+      this.chat.setUser(user);
+    }
+
+    const chatComponent = this.chat.render();
     this.chatComponent.replaceWith(chatComponent);
     this.chatComponent = chatComponent;
   };

@@ -15,10 +15,17 @@ export class Chat {
   constructor(currentUser: User) {
     this.currentUser = currentUser;
     this.builder = new HTMLBuilder();
-    this.sendBar = new SendBar();
-    this.chatField = new ChatField();
+    this.sendBar = new SendBar(currentUser);
+    this.chatField = new ChatField(currentUser);
     this.targetUser = new TargetUser(currentUser);
   }
+
+  setUser = (user: User) => {
+    this.currentUser = user;
+    this.targetUser.setUser(user);
+    this.chatField.setUser(user);
+    this.sendBar.setUser(user);
+  };
 
   render() {
     const chat = this.builder.getDiv('chat');

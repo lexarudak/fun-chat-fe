@@ -31,6 +31,12 @@ export class TargetUser {
     ws.addListener(WSTypes.USER_EXTERNAL_LOGOUT, this.handleLogout);
   }
 
+  setUser = (user: User) => {
+    this.name.innerHTML = user.login;
+    this.status.innerText = this.getStatus(user);
+    this.status.classList[user.isLogined ? 'add' : 'remove']('active');
+  };
+
   getStatus = (user: User) => {
     return user.isLogined ? UserStatus.online : UserStatus.offline;
   };

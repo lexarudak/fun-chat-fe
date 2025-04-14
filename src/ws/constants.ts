@@ -1,6 +1,11 @@
 export enum WSTypes {
   ERROR = 'ERROR',
 
+  MSG_READ = 'MSG_READ',
+
+  MSG_SEND = 'MSG_SEND',
+  MSG_FROM_USER = 'MSG_FROM_USER',
+
   USER_LOGIN = 'USER_LOGIN',
   USER_LOGOUT = 'USER_LOGOUT',
 

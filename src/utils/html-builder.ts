@@ -69,6 +69,15 @@ export class HTMLBuilder {
     return p;
   };
 
+  getSpan = (text: string, classname?: string) => {
+    const span = document.createElement('span');
+
+    this.addClasses(span, classname);
+
+    span.innerText = text;
+    return span;
+  };
+
   getA = (text: string, href: string, classname?: string) => {
     const a = document.createElement('a');
     a.href = href;

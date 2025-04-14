@@ -1,5 +1,5 @@
 import { WSTypes } from './constants';
-import { UserData, WsListener, WsResponse } from './types';
+import { Message, UserData, WsListener, WsResponse } from './types';
 
 const ORIGIN = 'http://127.0.0.1:4000';
 
@@ -34,6 +34,8 @@ class WebSocketService {
       const listenersSet = new Set<WsListener>();
       listenersSet.add(callback);
       this.listeners.set(type, listenersSet);
+
+      console.log(this.listeners.values());
       return;
     }
 
@@ -80,6 +82,46 @@ class WebSocketService {
         id: null,
         type: WSTypes.USER_INACTIVE,
         payload: null,
+      }),
+    );
+  };
+
+  sendMessage = (message: Message) => {
+    this.socket.send(
+      JSON.stringify({
+        id: null,
+        type: WSTypes.MSG_SEND,
+        payload: {
+          message,
+        },
+      }),
+    );
+  };
+
+  getHistory = (login: string) => {
+    this.socket.send(
+      JSON.stringify({
+        id: null,
+        type: WSTypes.MSG_FROM_USER,
+        payload: {
+          user: {
+            login,
+          },
+        },
+      }),
+    );
+  };
+
+  readMessage = (id: string) => {
+    this.socket.send(
+      JSON.stringify({
+        id: null,
+        type: WSTypes.MSG_READ,
+        payload: {
+          message: {
+            id,
+          },
+        },
       }),
     );
   };

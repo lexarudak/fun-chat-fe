@@ -1,0 +1,30 @@
+.message-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 5px;
+  width: 300px;
+
+  p {
+    margin-top: 0;
+    overflow-wrap: anywhere;
+  }
+
+  &.incoming {
+    background-color: var(--color-background);
+    align-self: flex-start;
+  }
+
+  &.outgoing {
+    background-color: var(--btn-color);
+    align-self: flex-end;
+  }
+
+  .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: x-small;
+  }
+
+}

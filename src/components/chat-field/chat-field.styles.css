@@ -1,7 +1,12 @@
 .field {
   display: flex;
+  flex-direction: column;
   padding: 10px;
   background-color: white;
   border-radius: 5px;
   flex-grow: 1;
+  overflow-y: scroll;
+  max-height: 100%;
+  gap: 10px;
+  border: 2px solid white;
 }

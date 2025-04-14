@@ -12,4 +12,21 @@ export declare namespace Payload {
   type UserList = {
     users: User[];
   };
+
+  type History = {
+    messages: MessageData[];
+  };
+
+  type Message = {
+    message: MessageData;
+  };
+
+  type ReadedMessage = {
+    message: {
+      id: string;
+      status: {
+        isReaded: boolean;
+      };
+    };
+  };
 }

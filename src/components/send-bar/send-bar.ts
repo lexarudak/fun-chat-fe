@@ -1,4 +1,6 @@
 import { HTMLBuilder } from '../../utils/html-builder';
+import { User } from '../../ws/types';
+import { ws } from '../../ws/ws';
 import './send-bar.styles.css';
 
 const DEFAULT_MESSAGE = '';
@@ -8,8 +10,10 @@ export class SendBar {
   input: HTMLInputElement;
   sendBtn: HTMLButtonElement;
   builder: HTMLBuilder;
+  currentUser: User;
 
-  constructor() {
+  constructor(currentUser: User) {
+    this.currentUser = currentUser;
     this.builder = new HTMLBuilder();
     this.input = this.builder.getInput(
       DEFAULT_MESSAGE,
@@ -21,6 +25,10 @@ export class SendBar {
     });
   }
 
+  setUser = (user: User) => {
+    this.currentUser = user;
+  };
+
   onInput = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
       console.log(!event.target.value);
@@ -28,7 +36,14 @@ export class SendBar {
     }
   };
 
-  onSend = () => {};
+  onSend = () => {
+    ws.sendMessage({
+      to: this.currentUser.login,
+      text: this.input.value,
+    });
+    this.input.value = DEFAULT_MESSAGE;
+    this.sendBtn.disabled = true;
+  };
 
   render = () => {
     const sendBar = this.builder.getDiv('bar');
