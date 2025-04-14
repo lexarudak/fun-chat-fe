@@ -47,9 +47,7 @@ export class HTMLBuilder {
     const button = document.createElement('button');
     button.classList.add('btn');
 
-    if (options?.classname) {
-      button.classList.add(options.classname);
-    }
+    this.addClasses(button, options?.classname);
 
     button.disabled = options?.isDisabled || false;
     button.innerText = text;
@@ -65,9 +63,7 @@ export class HTMLBuilder {
   getP = (text: string, classname?: string) => {
     const p = document.createElement('p');
 
-    if (classname) {
-      p.classList.add(classname);
-    }
+    this.addClasses(p, classname);
 
     p.innerText = text;
     return p;
@@ -89,7 +85,7 @@ export class HTMLBuilder {
   getInput = (
     value: string,
     placeholder: string,
-    onChange: (e: Event) => void,
+    onChange?: (e: Event) => void,
   ) => {
     const input = document.createElement('input');
     input.classList.add('input');
@@ -98,9 +94,17 @@ export class HTMLBuilder {
     input.placeholder = placeholder;
 
     input.addEventListener('input', (e) => {
-      onChange(e);
+      onChange?.(e);
     });
 
     return input;
+  };
+
+  addClasses = (target: HTMLElement, classes?: string) => {
+    if (classes) {
+      classes.split(' ').forEach((cls) => {
+        target.classList.add(cls);
+      });
+    }
   };
 }

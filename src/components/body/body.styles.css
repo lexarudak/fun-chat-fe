@@ -1,7 +1,17 @@
 .chat-body {
   display: flex;
-  gap: 20px;
   background-color: var(--color-background);
   border-radius: 10px;
   flex-grow: 1;
+  height: 60svh;
+
+  .no-users {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text);
+  }
+
 }

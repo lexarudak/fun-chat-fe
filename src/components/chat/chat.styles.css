@@ -1,0 +1,8 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 5px;
+  flex-grow: 1;
+  margin: 20px;
+}

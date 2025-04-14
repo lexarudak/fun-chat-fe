@@ -1,6 +1,7 @@
 import { HTMLBuilder } from '../../utils/html-builder';
 import { WSTypes } from '../../ws/constants';
 import { Payload } from '../../ws/payloads';
+import { User } from '../../ws/types';
 import { ws } from '../../ws/ws';
 import { UserCard } from '../user-card/user-card';
 import { messages } from './messages';
@@ -13,13 +14,15 @@ export class UserList {
   input;
   usersContainer;
   query = DEFAULT_QUERY;
+  setCurrentUser;
 
   activeUserCards: UserCard[] = [];
   inactiveUserCards: UserCard[] = [];
 
   currentUser: string | null = null;
 
-  constructor() {
+  constructor(setCurrentUser: (user: User) => void) {
+    this.setCurrentUser = setCurrentUser;
     this.builder = new HTMLBuilder();
     this.input = this.builder.getInput(
       this.query,
@@ -44,17 +47,19 @@ export class UserList {
   handleAllActiveUsers = ({ users }: Payload.UserList) => {
     this.activeUserCards = users
       .filter(({ login }) => login !== this.currentUser)
-      .map((user) => new UserCard(user));
+      .map((user) => new UserCard(user, this.setCurrentUser));
     this.fillContainer();
   };
 
   handleAllInActiveUsers = ({ users }: Payload.UserList) => {
-    this.inactiveUserCards = users.map((user) => new UserCard(user));
+    this.inactiveUserCards = users.map(
+      (user) => new UserCard(user, this.setCurrentUser),
+    );
     this.fillContainer();
   };
 
   handleExternalLogin = ({ user }: Payload.OneUser) => {
-    this.activeUserCards.push(new UserCard(user));
+    this.activeUserCards.push(new UserCard(user, this.setCurrentUser));
     this.inactiveUserCards = this.inactiveUserCards.filter(
       ({ user: { login } }) => login !== user.login,
     );
@@ -62,7 +67,10 @@ export class UserList {
   };
 
   handleExternalLogout = ({ user }: Payload.OneUser) => {
-    this.inactiveUserCards = [new UserCard(user), ...this.inactiveUserCards];
+    this.inactiveUserCards = [
+      new UserCard(user, this.setCurrentUser),
+      ...this.inactiveUserCards,
+    ];
     this.activeUserCards = this.activeUserCards.filter(
       ({ user: { login } }) => login !== user.login,
     );

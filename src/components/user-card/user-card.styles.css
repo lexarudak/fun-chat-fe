@@ -4,23 +4,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: start;
+    flex-shrink: 0;
     background-color: var(--color-user-card);
 
     &:hover {
       background-color: var(--color-user-card-hover);
     }
 
-  }
+    &.active {
+      background-color: var(--color-user-card-active);
 
-  &.user-card__active {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: start;
-    background-color: var(--color-user-card-active);
+      &:hover {
+        background-color: var(--color-user-card-active-hover);
+      }
 
-    &:hover {
-      background-color: var(--color-user-card-active-hover);
     }
 
   }

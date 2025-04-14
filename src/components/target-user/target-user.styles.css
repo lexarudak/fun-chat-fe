@@ -1,0 +1,19 @@
+.target-user {
+  display: flex;
+
+  p {
+    font-weight: 600;
+  }
+
+}
+
+.target-user-name {
+  margin-right: auto;
+}
+
+.target-user-status {
+  &.active {
+    color: var(--color-text-active);
+  }
+
+}
