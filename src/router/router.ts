@@ -3,7 +3,7 @@ import { HomePage } from '../pages/home-page/home-page';
 import { LoginPage } from '../pages/login-page/login-page';
 import { NotFoundPage } from '../pages/not-found-page/not-found-page';
 import { SSController } from '../utils/ss-controller';
-import { WebSocketTypes } from '../ws/constants';
+import { WSTypes } from '../ws/constants';
 import { Payload } from '../ws/payloads';
 import { User, UserData } from '../ws/types';
 import { ws } from '../ws/ws';
@@ -24,11 +24,11 @@ export class Router {
       new NotFoundPage(this),
     ];
 
-    ws.addListener(WebSocketTypes.USER_LOGIN, this.handleLogin);
-    ws.addListener(WebSocketTypes.USER_LOGOUT, this.handleLogout);
+    ws.addListener(WSTypes.USER_LOGIN, this.handleLogin);
+    ws.addListener(WSTypes.USER_LOGOUT, this.handleLogout);
   }
 
-  handleLogin = (data: Payload.SuccessLogin) => {
+  handleLogin = (data: Payload.OneUser) => {
     if (data.user?.isLogined) {
       this.isLogined = true;
 
@@ -38,7 +38,7 @@ export class Router {
     }
   };
 
-  handleLogout = (data: Payload.SuccessLogin) => {
+  handleLogout = (data: Payload.OneUser) => {
     if (!data.user?.isLogined) {
       this.ssController.removerUser();
       this.isLogined = false;

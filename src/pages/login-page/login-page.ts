@@ -6,7 +6,7 @@ import { HTMLBuilder } from '../../utils/html-builder';
 import { SSController } from '../../utils/ss-controller';
 import { nameValidator } from '../../validators/name-validator/name-validator';
 import { passValidator } from '../../validators/pass-validator/pass-validator';
-import { WebSocketTypes } from '../../ws/constants';
+import { WSTypes } from '../../ws/constants';
 import { Payload } from '../../ws/payloads';
 import { UserData } from '../../ws/types';
 import { ws } from '../../ws/ws';
@@ -58,7 +58,7 @@ export class LoginPage {
       classname: 'submit-btn',
     });
 
-    ws.addListener(WebSocketTypes.ERROR, this.handleError);
+    ws.addListener(WSTypes.ERROR, this.handleError);
   }
 
   handleError = (data: Payload.Error) => {
@@ -73,7 +73,7 @@ export class LoginPage {
     );
   };
 
-  saveUser = (userData: UserData) => (data: Payload.SuccessLogin) => {
+  saveUser = (userData: UserData) => (data: Payload.OneUser) => {
     if (data.user.isLogined) {
       this.ssController.setUser(userData);
     }
@@ -86,7 +86,7 @@ export class LoginPage {
     };
 
     ws.login(user);
-    ws.addListener(WebSocketTypes.USER_LOGIN, this.saveUser(user));
+    ws.addListener(WSTypes.USER_LOGIN, this.saveUser(user));
     this.clearInputs();
   };
 

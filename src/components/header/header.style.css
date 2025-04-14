@@ -12,4 +12,14 @@
     margin-left: auto;
   }
 
+  .username {
+    color: var(--color-text-active);
+    margin: 10px 0 0;
+    font-weight: 700;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 }

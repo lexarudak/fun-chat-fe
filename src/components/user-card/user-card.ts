@@ -13,6 +13,10 @@ export class UserCard {
     this.builder = new HTMLBuilder();
   }
 
+  setIsLogined = (isLogined: boolean) => {
+    this.user.isLogined = isLogined;
+  };
+
   onClick = () => {
     console.log('User card clicked:', this.user);
   };

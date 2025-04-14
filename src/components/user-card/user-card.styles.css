@@ -1,5 +1,8 @@
 .btn {
   &.user-card {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-align: start;
     background-color: var(--color-user-card);
 
@@ -10,6 +13,9 @@
   }
 
   &.user-card__active {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-align: start;
     background-color: var(--color-user-card-active);
 

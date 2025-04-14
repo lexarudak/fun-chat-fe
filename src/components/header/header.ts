@@ -5,6 +5,8 @@ import { PagePath } from '../../router/constants';
 import './header.style.css';
 import { ws } from '../../ws/ws';
 import { SS_KEY } from '../../constants';
+import { Payload } from '../../ws/payloads';
+import { WSTypes } from '../../ws/constants';
 
 const DEFAULT_USERNAME = 'User';
 
@@ -16,8 +18,12 @@ export class Header {
   constructor(router: Router) {
     this.builder = new HTMLBuilder();
     this.router = router;
-    this;
+
+    ws.addListener(WSTypes.USER_LOGIN, this.handleLogin);
   }
+  handleLogin = (data: Payload.OneUser) => {
+    this.username = data.user.login;
+  };
 
   navigateToAbout = () => this.router.goTo(PagePath.About);
 
@@ -33,7 +39,7 @@ export class Header {
   render() {
     const header = this.builder.getHeader('header');
     const title = this.builder.getTitle(messages.title);
-    const username = this.builder.getP(`User: ${this.username}`);
+    const username = this.builder.getP(`Hello, ${this.username}`, 'username');
 
     const aboutButton = this.builder.getBtn(
       messages.about,

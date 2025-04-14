@@ -1,13 +1,11 @@
-import { WebSocketTypes } from './constants';
+import { WSTypes } from './constants';
 import { Payload } from './payloads';
 
-export type WsPayloads = Payload.SuccessLogin &
-  Payload.Error &
-  Payload.UserList;
+export type WsPayloads = Payload.OneUser & Payload.Error & Payload.UserList;
 
 export type WsResponse = {
   id: string | null;
-  type: WebSocketTypes;
+  type: WSTypes;
   payload: WsPayloads;
 };
 

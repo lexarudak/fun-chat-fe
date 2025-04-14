@@ -23,6 +23,8 @@ body {
   --btn-color: #42d36c;
   --btn-color-hover: #7ad895;
   --font-active: #4a4a4a;
+  --color-text-active: #42d36c;
+  --color-error-text: #a41414;
   --shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
@@ -90,7 +92,7 @@ a {
 }
 
 .error-message {
-  color: red;
+  color: var(--color-error-text);
   min-height: 20px;
   margin: 10px 0 0;
 }

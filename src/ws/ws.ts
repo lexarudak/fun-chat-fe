@@ -1,4 +1,4 @@
-import { WebSocketTypes } from './constants';
+import { WSTypes } from './constants';
 import { UserData, WsListener, WsResponse } from './types';
 
 const ORIGIN = 'http://127.0.0.1:4000';
@@ -10,7 +10,7 @@ class WebSocketService {
 
   constructor(url: string) {
     this.url = url;
-    this.listeners = new Map<WebSocketTypes, Set<WsListener>>();
+    this.listeners = new Map<WSTypes, Set<WsListener>>();
     this.socket = new WebSocket(this.url);
   }
 
@@ -27,7 +27,7 @@ class WebSocketService {
     });
   };
 
-  addListener = (type: WebSocketTypes, callback: WsListener) => {
+  addListener = (type: WSTypes, callback: WsListener) => {
     const listeners = this.listeners.get(type);
 
     if (!listeners) {
@@ -44,7 +44,7 @@ class WebSocketService {
     this.socket.send(
       JSON.stringify({
         id: null,
-        type: WebSocketTypes.USER_LOGIN,
+        type: WSTypes.USER_LOGIN,
         payload: {
           user,
         },
@@ -56,7 +56,7 @@ class WebSocketService {
     this.socket.send(
       JSON.stringify({
         id: null,
-        type: WebSocketTypes.USER_LOGOUT,
+        type: WSTypes.USER_LOGOUT,
         payload: {
           user,
         },
@@ -68,7 +68,7 @@ class WebSocketService {
     this.socket.send(
       JSON.stringify({
         id: null,
-        type: WebSocketTypes.USER_ACTIVE,
+        type: WSTypes.USER_ACTIVE,
         payload: null,
       }),
     );
@@ -78,7 +78,7 @@ class WebSocketService {
     this.socket.send(
       JSON.stringify({
         id: null,
-        type: WebSocketTypes.USER_INACTIVE,
+        type: WSTypes.USER_INACTIVE,
         payload: null,
       }),
     );

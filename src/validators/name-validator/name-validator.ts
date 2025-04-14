@@ -1,6 +1,6 @@
 import { Validator } from '../../types';
 
-const MIN_NAME_LENGTH = 4;
+const MIN_NAME_LENGTH = 2;
 
 export const nameValidator: Validator = (name: string) => {
   if (!name.trim()) {

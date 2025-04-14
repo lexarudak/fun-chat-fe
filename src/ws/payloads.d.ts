@@ -1,7 +1,7 @@
 import { User } from './types';
 
 export declare namespace Payload {
-  type SuccessLogin = {
+  type OneUser = {
     user: User;
   };
 
