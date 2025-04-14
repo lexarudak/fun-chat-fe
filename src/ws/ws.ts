@@ -64,11 +64,21 @@ class WebSocketService {
     );
   };
 
-  gettingAllAuthenticatedUsers = () => {
+  getAllActiveUsers = () => {
     this.socket.send(
       JSON.stringify({
         id: null,
         type: WebSocketTypes.USER_ACTIVE,
+        payload: null,
+      }),
+    );
+  };
+
+  getAllInactiveUsers = () => {
+    this.socket.send(
+      JSON.stringify({
+        id: null,
+        type: WebSocketTypes.USER_INACTIVE,
         payload: null,
       }),
     );

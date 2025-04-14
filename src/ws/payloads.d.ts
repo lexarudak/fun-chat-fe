@@ -1,3 +1,5 @@
+import { User } from './types';
+
 export declare namespace Payload {
   type SuccessLogin = {
     user: User;
@@ -5,5 +7,9 @@ export declare namespace Payload {
 
   type Error = {
     error: string;
+  };
+
+  type UserList = {
+    users: User[];
   };
 }

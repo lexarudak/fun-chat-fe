@@ -14,10 +14,14 @@ body {
 }
 
 :root {
+  --color-user-card-active: #42d36c;
+  --color-user-card-active-hover: #7ad895;
+  --color-user-card: #a0a0a0;
+  --color-user-card-hover: #bababa;
   --html-background: #09252e;
-  --color-background: #94c0c2;
-  --btn-color: #e2edc6;
-  --btn-color-hover: #f9ffea;
+  --color-background: #a587f5;
+  --btn-color: #42d36c;
+  --btn-color-hover: #7ad895;
   --font-active: #4a4a4a;
   --shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }

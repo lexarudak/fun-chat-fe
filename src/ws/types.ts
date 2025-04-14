@@ -1,7 +1,9 @@
 import { WebSocketTypes } from './constants';
 import { Payload } from './payloads';
 
-export type WsPayloads = Payload.SuccessLogin & Payload.Error;
+export type WsPayloads = Payload.SuccessLogin &
+  Payload.Error &
+  Payload.UserList;
 
 export type WsResponse = {
   id: string | null;
